@@ -14,12 +14,13 @@ expressServer.configure(function ()
 	expressServer.use(express.session({ secret : 'shhhhhhhhh!'}));
 	expressServer.use(connect.static(__dirname + '/static'));
 	expressServer.use(expressServer.router);
+	expressServer.use(function (err, req, res, next)
+	{
+		console.error(err.stack);
+//		res.render('500.jade', {zzzzzzzzzzzzzzzzzzzzzzzzzzzz : err});
+		res.render('500.jade', {error : err});
+	});
 });
-//setup the errors
-expressServer.use(function(err, req, res, next){
-	console.error(err.stack);
-	res.render('500.jade');
-})
 expressServer.listen(port);
 ///////////////////////////////////////////
 //              Routes                   //
